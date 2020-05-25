@@ -9,22 +9,28 @@ document.addEventListener('keydown', move);
 function Random(array) {
   let arr = [];
   if(!endgame(array)){
-      for (let i = 0; i < 2; i++) {
-          arr[i] = new Array(2);
-          for (let j = 0; j < 1; j++) {
-                let index_i = Math.floor(Math.random() * Math.floor(3));
-                let index_j = Math.floor(Math.random() * Math.floor(3));
-                let value = Math.random() > 0.5 ? 2 : 4;
-                if(array[index_i][index_j] !== 0){
-                    j = 0;
-                    continue;
-                }else{
-                  let a =  document.getElementById("a" +index_i +""+ index_j);
-                  array[index_i][index_j] = value;
-                  a.innerText = array[index_i][index_j];
-                }
+      for(let i = 0; i < 4; i++){
+          for(let j =0; j<4; j++){
+              if(array[i][j] === 0){
+                  arr.push([i,j]);
+              }
           }
       }
+      randomNumber(arr);
+      randomNumber(arr);
+  }
+}
+function randomNumber(arr) {
+  if(arr.length > 0){
+    console.log(arr.length);
+    let index = Math.floor(Math.random() * Math.floor(arr.length));
+    let [index_i, index_j] = arr[index];
+    console.log(index);
+    let a =  document.getElementById("a" +index_i +""+ index_j);
+    let value = Math.random() > 0.5 ? 2 : 4;
+    console.log(value);
+    array[index_i][index_j] = value;
+    a.innerText =  array[index_i][index_j];
   }
 }
 function createTable(array) {
@@ -53,55 +59,64 @@ function createTable(array) {
     body.appendChild(div);
     Random(array);
 }
+// all number move right
 function changeArrayR(array) {
     const bool = [];
     for (let i = 0; i < array.length; i++) {
         for(let j = 0; j<array[i].length; j++){
-              array[i] = sideR(array[i]);
-              array[i] = sum(array[i]);
-              array[i] = sideR(array[i]);
+              array[i] = thesameR(array[i])
       }
     }
     draw(array);
     return array;
 }
+// all number move left
 function changeArrayL(array) {
     for (let i = 0; i < array.length; i++) {
           for(let j = 0; j<array[i].length; j++){
-            array[i] = sideL(array[i]);
-            array[i] = sumL(array[i]);
-            array[i] = sideL(array[i]);
+            array[i] = thesameL(array[i])
         }
     }
     draw(array)
     return array;
 }
+// all number move up
 function changeArrayU(array) {
     for(let i = 0; i<array.length; i++){
           for(let j = 0; j<array[i].length; j++){
             let arr = getcheil(array, i);
-            arr = sideL(arr);
-            arr = sumL(arr);
-            arr = sideL(arr);
+            arr = thesameL(arr)
             setcheil(array,i,arr);
       }
   }
   draw(array)
   return array;
 }
+// all nummber move down
 function changeArrayD(array) {
   for (let i = 0; i < array.length; i++) {
       for(let j = 0; j<array[i].length; j++){
         let arr = getcheil(array, i);
-        arr = sideR(arr);
-        arr = sum(arr);
-        arr = sideR(arr);
+        arr = thesameR(arr)
         setcheil(array,i,arr);
       }
   }
     draw(array)
     return array;
 }
+function thesameR(arr) {
+  arr = sideR(arr);
+  arr = sum(arr);
+  arr = sideR(arr);
+  return arr
+}
+function thesameL(arr) {
+  arr = sideL(arr);
+  arr = sumL(arr);
+  arr = sideL(arr);
+  return arr
+}
+// get columns
 function getcheil(array,i) {
   let arr = []
       for(let j = 0; j<array.length; j++){
@@ -109,6 +124,7 @@ function getcheil(array,i) {
       }
   return arr;
 }
+// set columns;
 function setcheil(array,i,arr) {
       for(let j = 0; j<array.length; j++){
         array[j][i] = arr[j];
