@@ -5,6 +5,13 @@
   margin-left: auto;
   margin-right: auto;
 }
+#points{
+  width:auto;
+  height: 50px
+  text-align: center;
+  font-size: 60px;
+  color: white;
+}
 .forTd{
   width: 100px;
   color: white;
@@ -15,4 +22,20 @@
 }
 body{
   background-color: black
+}
+#end{
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  text-align: center;
+  z-index: 2;
+  visibility: hidden;
+}
+#lose{
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  text-align: center;
+  z-index: 2;
+  visibility: visible;
 }
